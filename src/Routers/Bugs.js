@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import cheerio from "cheerio";
-import "../css/App.css";
 
-class Bugs extends Component {
-  getChart = async () => {
+function Bugs() {
+  const [bugsChart, setBugsChart] = useState([]);
+  const getChart = async () => {
     try {
       return await axios.get(
         "https://cors-anywhere.herokuapp.com/https://music.bugs.co.kr/chart"
@@ -14,9 +14,9 @@ class Bugs extends Component {
     }
   };
 
-  getHtml = () => {
-    this.getChart().then((html) => {
-      let chartList = [];
+  const getHtml = () => {
+    getChart().then((html) => {
+      const chartList = [];
       const $ = cheerio.load(html.data);
       const $titleList = $("th").children("p.title").children("a");
       const $artistList = $("td.left")
@@ -31,15 +31,14 @@ class Bugs extends Component {
           album: $albumList[i].attribs.src,
         };
       });
-      this.setState({ bugsChart: chartList });
+      setBugsChart(chartList);
     });
   };
 
-  chartList = () => {
-    const { bugsChart } = this.state;
+  const chartList = () => {
     return (
       <div>
-        <table>
+        <table className="chart_table">
           <thead>
             <tr>
               <th>순위</th>
@@ -71,18 +70,11 @@ class Bugs extends Component {
     );
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      bugsChart: [],
-    };
-  }
-  componentDidMount() {
-    this.getHtml();
-  }
-  render() {
-    return <div className="App">{<div>{this.chartList()}</div>}</div>;
-  }
+  useEffect(() => {
+    getHtml();
+  }, []);
+
+  return <div>{chartList()}</div>;
 }
 
 export default Bugs;

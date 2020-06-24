@@ -1,10 +1,11 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import cheerio from "cheerio";
-import "../css/App.css";
 
-class Melon extends Component {
-  getChart = async () => {
+function Melon() {
+  const [melonChart, setMelonChart] = useState([]);
+
+  const getChart = async () => {
     try {
       return await axios.get(
         "https://cors-anywhere.herokuapp.com/https://www.melon.com/chart/index.htm"
@@ -14,9 +15,9 @@ class Melon extends Component {
     }
   };
 
-  getHtml = () => {
-    this.getChart().then((html) => {
-      let chartList = [];
+  const getHtml = () => {
+    getChart().then((html) => {
+      const chartList = [];
       const $ = cheerio.load(html.data);
       const $titleList = $("div.wrap_song_info")
         .children("div.rank01")
@@ -34,15 +35,14 @@ class Melon extends Component {
           album: $albumList[i].attribs.src,
         };
       });
-      this.setState({ melonChart: chartList });
+      setMelonChart(chartList);
     });
   };
 
-  chartList = () => {
-    const { melonChart } = this.state;
+  const chartList = () => {
     return (
       <div>
-        <table>
+        <table className="chart_table">
           <thead>
             <tr>
               <th>순위</th>
@@ -73,23 +73,11 @@ class Melon extends Component {
       </div>
     );
   };
+  useEffect(() => {
+    getHtml();
+  }, []);
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      melonChart: [],
-    };
-  }
-  componentDidMount() {
-    this.getHtml();
-  }
-  render() {
-    return (
-      <div className="App">
-        <div>{this.chartList()}</div>
-      </div>
-    );
-  }
+  return <div>{chartList()}</div>;
 }
 
 export default Melon;
