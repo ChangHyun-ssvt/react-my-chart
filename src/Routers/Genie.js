@@ -47,7 +47,7 @@ function Genie() {
 
   const chartList = () => {
     return (
-      <div>
+      <div className="container">
         <table className="chart_table">
           <thead>
             <tr>
