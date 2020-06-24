@@ -4,6 +4,7 @@ import cheerio from "cheerio";
 
 function Bugs() {
   const [bugsChart, setBugsChart] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const getChart = async () => {
     try {
       return await axios.get(
@@ -32,6 +33,7 @@ function Bugs() {
         };
       });
       setBugsChart(chartList);
+      setIsLoading(false);
     });
   };
 
@@ -74,7 +76,17 @@ function Bugs() {
     getHtml();
   }, []);
 
-  return <div>{chartList()}</div>;
+  return (
+    <div>
+      {isLoading ? (
+        <div className="loading">
+          <h2>Loading....</h2>
+        </div>
+      ) : (
+        chartList()
+      )}
+    </div>
+  );
 }
 
 export default Bugs;

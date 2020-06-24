@@ -4,7 +4,7 @@ import cheerio from "cheerio";
 
 function Melon() {
   const [melonChart, setMelonChart] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(true);
   const getChart = async () => {
     try {
       return await axios.get(
@@ -36,6 +36,7 @@ function Melon() {
         };
       });
       setMelonChart(chartList);
+      setIsLoading(false);
     });
   };
 
@@ -77,7 +78,17 @@ function Melon() {
     getHtml();
   }, []);
 
-  return <div>{chartList()}</div>;
+  return (
+    <div>
+      {isLoading ? (
+        <div className="loading">
+          <h2>Loading....</h2>
+        </div>
+      ) : (
+        chartList()
+      )}
+    </div>
+  );
 }
 
 export default Melon;
