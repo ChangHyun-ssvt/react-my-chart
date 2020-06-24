@@ -53,19 +53,19 @@ function Melon() {
             </tr>
           </thead>
           <tbody>
-            {melonChart.map((list, index) => {
+            {melonChart.map((chart, index) => {
               return (
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>
                     <img
-                      src={melonChart[index].album}
-                      alt={melonChart[index].title}
-                      title={melonChart[index].title}
+                      src={chart.album}
+                      alt={chart.title}
+                      title={chart.title}
                     ></img>
                   </td>
-                  <td>{melonChart[index].title}</td>
-                  <td>{melonChart[index].artist}</td>
+                  <td>{chart.title}</td>
+                  <td>{chart.artist}</td>
                 </tr>
               );
             })}

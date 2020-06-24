@@ -50,19 +50,19 @@ function Bugs() {
             </tr>
           </thead>
           <tbody>
-            {bugsChart.map((list, index) => {
+            {bugsChart.map((chart, index) => {
               return (
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>
                     <img
-                      src={bugsChart[index].album}
-                      alt={bugsChart[index].title}
-                      title={bugsChart[index].title}
+                      src={chart.album}
+                      alt={chart.title}
+                      title={chart.title}
                     ></img>
                   </td>
-                  <td>{bugsChart[index].title}</td>
-                  <td>{bugsChart[index].artist}</td>
+                  <td>{chart.title}</td>
+                  <td>{chart.artist}</td>
                 </tr>
               );
             })}
