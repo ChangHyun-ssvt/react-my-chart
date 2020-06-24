@@ -4,15 +4,28 @@ import cheerio from "cheerio";
 
 function Genie() {
   const [genieChart, setGenieChart] = useState([]);
-  const getChart = async (url) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const url = [
+    "https://cors-anywhere.herokuapp.com/https://www.genie.co.kr/chart/top200",
+    "https://cors-anywhere.herokuapp.com/https://www.genie.co.kr/chart/top200?ditc=D&ymd=20200611&hh=14&rtm=Y&pg=2",
+  ];
+  const getChart = async () => {
     try {
-      return await axios.get(url);
+      const top50 = await axios.get(url[0]);
+      const top100 = await axios.get(url[1]);
+
+      Promise.all([top50, top100]).then((values) => {
+        values.map((value) => {
+          setChart(value);
+        });
+        setIsLoading(false);
+      });
     } catch (error) {
       console.error(error);
     }
   };
 
-  function setChart(html) {
+  const setChart = (html) => {
     const chartList = [];
     const $ = cheerio.load(html.data);
     const $titleList = $("tr.list").children("td.info").children("a.title");
@@ -29,21 +42,7 @@ function Genie() {
         album: $albumList[i].attribs.src,
       };
     });
-    return chartList;
-  }
-
-  const getHtml = () => {
-    let chartList = [];
-    const url = [
-      "https://cors-anywhere.herokuapp.com/https://www.genie.co.kr/chart/top200",
-      "https://cors-anywhere.herokuapp.com/https://www.genie.co.kr/chart/top200?ditc=D&ymd=20200611&hh=14&rtm=Y&pg=2",
-    ];
-    url.map((url) => {
-      getChart(url).then((html) => {
-        chartList = chartList.concat(setChart(html));
-        setGenieChart(genieChart.concat(chartList));
-      });
-    });
+    setGenieChart(genieChart.concat(chartList));
   };
 
   const chartList = () => {
@@ -59,19 +58,19 @@ function Genie() {
             </tr>
           </thead>
           <tbody>
-            {genieChart.map((list, index) => {
+            {genieChart.map((chart, index) => {
               return (
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>
                     <img
-                      src={genieChart[index].album}
-                      alt={genieChart[index].title}
-                      title={genieChart[index].title}
+                      src={chart.album}
+                      alt={chart.title}
+                      title={chart.title}
                     ></img>
                   </td>
-                  <td>{genieChart[index].title}</td>
-                  <td>{genieChart[index].artist}</td>
+                  <td>{chart.title}</td>
+                  <td>{chart.artist}</td>
                 </tr>
               );
             })}
@@ -82,10 +81,22 @@ function Genie() {
   };
 
   useEffect(() => {
-    getHtml();
+    getChart();
   }, []);
 
-  return <div>{chartList()}</div>;
+  console.log(genieChart);
+
+  return (
+    <div>
+      {isLoading ? (
+        <div className="loading">
+          <h2>Loading....</h2>
+        </div>
+      ) : (
+        chartList()
+      )}
+    </div>
+  );
 }
 
 export default Genie;
