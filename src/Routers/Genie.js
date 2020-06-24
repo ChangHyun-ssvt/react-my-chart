@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import cheerio from "cheerio";
-import "../css/App.css";
 
-class Genie extends Component {
-  getChart = async (url) => {
+function Genie() {
+  const [genieChart, setGenieChart] = useState([]);
+  const getChart = async (url) => {
     try {
       return await axios.get(url);
     } catch (error) {
@@ -12,8 +12,8 @@ class Genie extends Component {
     }
   };
 
-  setChart = (html) => {
-    let chartList = [];
+  function setChart(html) {
+    const chartList = [];
     const $ = cheerio.load(html.data);
     const $titleList = $("tr.list").children("td.info").children("a.title");
     const $artistList = $("tr.list").children("td.info").children("a.artist");
@@ -28,27 +28,28 @@ class Genie extends Component {
         artist: $artistList[i].children[0].data,
         album: $albumList[i].attribs.src,
       };
-      this.setState({ genieChart: this.state.genieChart.concat(chartList[i]) });
     });
-  };
+    return chartList;
+  }
 
-  getHtml = () => {
+  const getHtml = () => {
+    let chartList = [];
     const url = [
       "https://cors-anywhere.herokuapp.com/https://www.genie.co.kr/chart/top200",
       "https://cors-anywhere.herokuapp.com/https://www.genie.co.kr/chart/top200?ditc=D&ymd=20200611&hh=14&rtm=Y&pg=2",
     ];
     url.map((url) => {
-      this.getChart(url).then((html) => {
-        this.setChart(html);
+      getChart(url).then((html) => {
+        chartList = chartList.concat(setChart(html));
+        setGenieChart(genieChart.concat(chartList));
       });
     });
   };
 
-  chartList = () => {
-    const { genieChart } = this.state;
+  const chartList = () => {
     return (
       <div>
-        <table>
+        <table className="chart_table">
           <thead>
             <tr>
               <th>순위</th>
@@ -80,18 +81,11 @@ class Genie extends Component {
     );
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      genieChart: [],
-    };
-  }
-  componentDidMount() {
-    this.getHtml();
-  }
-  render() {
-    return <div className="App">{<div>{this.chartList()}</div>}</div>;
-  }
+  useEffect(() => {
+    getHtml();
+  }, []);
+
+  return <div>{chartList()}</div>;
 }
 
 export default Genie;
