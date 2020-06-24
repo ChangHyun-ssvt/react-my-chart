@@ -2,6 +2,15 @@ body {
   width: 90%;
   padding: 30px;
 }
+
+div.loading {
+  position: absolute;
+  display: inline-block;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 table.chart_table {
   margin: auto;
   width: 60%;
