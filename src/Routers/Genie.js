@@ -43,7 +43,6 @@ function Genie() {
         album: $albumList[i].attribs.src,
       };
     });
-    console.log("setChart", genieChart);
     setGenieChart(genieChart.concat(chartList));
   };
 
@@ -84,12 +83,9 @@ function Genie() {
 
   useEffect(() => {
     getChart();
-    return () => {
-      console.log("genieUnmount");
-    };
+    return () => {};
   }, []);
 
-  console.log("render", genieChart);
   return (
     <div>
       {isLoading ? (
