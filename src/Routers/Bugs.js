@@ -74,6 +74,9 @@ function Bugs() {
 
   useEffect(() => {
     getHtml();
+    return () => {
+      console.log("bugsUnmount");
+    };
   }, []);
 
   return (

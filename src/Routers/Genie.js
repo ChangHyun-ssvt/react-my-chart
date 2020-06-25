@@ -17,6 +17,7 @@ function Genie() {
       Promise.all([top50, top100]).then((values) => {
         values.map((value) => {
           setChart(value);
+          return true;
         });
         setIsLoading(false);
       });
@@ -42,6 +43,7 @@ function Genie() {
         album: $albumList[i].attribs.src,
       };
     });
+    console.log("setChart", genieChart);
     setGenieChart(genieChart.concat(chartList));
   };
 
@@ -82,10 +84,12 @@ function Genie() {
 
   useEffect(() => {
     getChart();
+    return () => {
+      console.log("genieUnmount");
+    };
   }, []);
 
-  console.log(genieChart);
-
+  console.log("render", genieChart);
   return (
     <div>
       {isLoading ? (

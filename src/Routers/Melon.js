@@ -76,6 +76,9 @@ function Melon() {
   };
   useEffect(() => {
     getHtml();
+    return () => {
+      console.log("melonUnmount");
+    };
   }, []);
 
   return (
