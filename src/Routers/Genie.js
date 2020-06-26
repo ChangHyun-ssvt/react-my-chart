@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import cheerio from "cheerio";
 
@@ -37,7 +37,7 @@ function Genie() {
       .children("a.cover")
       .children("img");
 
-    $titleList.map((i) => {
+    $titleList.each((i) => {
       chartList[i] = {
         title: $titleList[i].children[0].data.trim(),
         artist: $artistList[i].children[0].data,
