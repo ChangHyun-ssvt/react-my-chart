@@ -14,11 +14,11 @@ div.loading {
 }
 
 div.container {
-  padding: 80px 0 40px;
+  padding: 80px 0 0;
 }
 
 table.chart_table {
-  margin: auto;
+  margin: 20px auto 40px;
   width: 60%;
   text-align: center;
 }
