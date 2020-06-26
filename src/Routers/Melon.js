@@ -28,7 +28,7 @@ function Melon() {
         .children("span");
       const $albumList = $("div.wrap").children("a").children("img");
 
-      $titleList.each((i, elem) => {
+      $titleList.map((i) => {
         chartList[i] = {
           title: $titleList[i].children[0].data,
           artist: $artistList[i].children[0].children[0].data,

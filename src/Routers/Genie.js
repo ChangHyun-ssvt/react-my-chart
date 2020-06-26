@@ -36,7 +36,7 @@ function Genie() {
       .children("a.cover")
       .children("img");
 
-    $titleList.each((i, elem) => {
+    $titleList.map((i) => {
       chartList[i] = {
         title: $titleList[i].children[0].data.trim(),
         artist: $artistList[i].children[0].data,
