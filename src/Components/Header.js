@@ -9,21 +9,24 @@ export default class Header extends Component {
         <nav>
           <ul className="nav_left">
             <li>
-              <Link to="/melon">melon</Link>
+              <Link to="/">MyChart</Link>
             </li>
             <li>
-              <Link to="/bugs">bugs</Link>
+              <Link to="/melon">멜론</Link>
             </li>
             <li>
-              <Link to="/genie">genie</Link>
+              <Link to="/bugs">벅스</Link>
+            </li>
+            <li>
+              <Link to="/genie">지니</Link>
             </li>
           </ul>
           <ul className="nav_right">
             <li>
-              <Link to="/">Login</Link>
+              <Link to="/">로그인</Link>
             </li>
             <li>
-              <Link to="/">Register</Link>
+              <Link to="/">회원가입</Link>
             </li>
           </ul>
         </nav>

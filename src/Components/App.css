@@ -2,21 +2,15 @@ html {
   overflow-y: scroll;
 }
 
-html,
-body {
-  width: 100%;
-}
-
 div.loading {
   position: absolute;
-  display: inline-block;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
 div.container {
-  padding: 20px;
+  padding: 80px 20px;
 }
 
 table.chart_table {
