@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import cheerio from "cheerio";
 
 function Genie() {
-  const [genieChart, setGenieChart] = useState([]);
+  const [genieChart, setGenieChart] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const url = [
     "https://cors-anywhere.herokuapp.com/https://www.genie.co.kr/chart/top200",
