@@ -43,41 +43,40 @@ function Genie() {
         album: $albumList[i].attribs.src,
       };
     });
-    setGenieChart(genieChart.concat(chartList));
+    setGenieChart(chartList);
+    console.log(genieChart);
   };
 
   const chartList = () => {
     return (
-      <div className="container">
-        <table className="chart_table">
-          <thead>
-            <tr>
-              <th>순위</th>
-              <th>앨범</th>
-              <th>제목</th>
-              <th>아티스트</th>
-            </tr>
-          </thead>
-          <tbody>
-            {genieChart.map((chart, index) => {
-              return (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>
-                    <img
-                      src={chart.album}
-                      alt={chart.title}
-                      title={chart.title}
-                    ></img>
-                  </td>
-                  <td>{chart.title}</td>
-                  <td>{chart.artist}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+      <table className="chart_table">
+        <thead>
+          <tr>
+            <th>순위</th>
+            <th>앨범</th>
+            <th>제목</th>
+            <th>아티스트</th>
+          </tr>
+        </thead>
+        <tbody>
+          {genieChart.map((chart, index) => {
+            return (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>
+                  <img
+                    src={chart.album}
+                    alt={chart.title}
+                    title={chart.title}
+                  ></img>
+                </td>
+                <td>{chart.title}</td>
+                <td>{chart.artist}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     );
   };
 
@@ -86,8 +85,10 @@ function Genie() {
     return () => {};
   }, []);
 
+  console.log(genieChart);
+
   return (
-    <div>
+    <div className="container">
       {isLoading ? (
         <div className="loading">
           <h2>Loading....</h2>
