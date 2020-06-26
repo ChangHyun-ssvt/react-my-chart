@@ -9,6 +9,7 @@ function Genie() {
     "https://cors-anywhere.herokuapp.com/https://www.genie.co.kr/chart/top200",
     "https://cors-anywhere.herokuapp.com/https://www.genie.co.kr/chart/top200?ditc=D&ymd=20200611&hh=14&rtm=Y&pg=2",
   ];
+
   const getChart = async () => {
     try {
       const top50 = await axios.get(url[0]);
@@ -43,8 +44,7 @@ function Genie() {
         album: $albumList[i].attribs.src,
       };
     });
-    setGenieChart(chartList);
-    console.log("setChart", genieChart);
+    setGenieChart(genieChart.concat(chartList));
   };
 
   const chartList = () => {
