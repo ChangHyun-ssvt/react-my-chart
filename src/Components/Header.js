@@ -7,19 +7,23 @@ export default class Header extends Component {
     return (
       <header>
         <nav>
-          <ul>
+          <ul className="nav_left">
             <li>
               <Link to="/melon">melon</Link>
             </li>
-          </ul>
-          <ul>
             <li>
               <Link to="/bugs">bugs</Link>
             </li>
-          </ul>
-          <ul>
             <li>
               <Link to="/genie">genie</Link>
+            </li>
+          </ul>
+          <ul className="nav_right">
+            <li>
+              <Link to="/">Login</Link>
+            </li>
+            <li>
+              <Link to="/">Register</Link>
             </li>
           </ul>
         </nav>
