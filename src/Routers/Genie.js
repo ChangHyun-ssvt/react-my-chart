@@ -44,7 +44,7 @@ function Genie() {
       };
     });
     setGenieChart(chartList);
-    console.log(genieChart);
+    console.log("setChart", genieChart);
   };
 
   const chartList = () => {
@@ -85,7 +85,7 @@ function Genie() {
     return () => {};
   }, []);
 
-  console.log(genieChart);
+  console.log("render", genieChart);
 
   return (
     <div className="container">
