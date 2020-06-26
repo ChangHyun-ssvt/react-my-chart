@@ -5,39 +5,39 @@ import cheerio from "cheerio";
 function Melon() {
   const [melonChart, setMelonChart] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const url =
+    "https://cors-anywhere.herokuapp.com/https://www.melon.com/chart/index.htm";
+
   const getChart = async () => {
     try {
-      return await axios.get(
-        "https://cors-anywhere.herokuapp.com/https://www.melon.com/chart/index.htm"
-      );
+      const top100 = await axios.get(url);
+      setChart(top100);
+      setIsLoading(false);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const getHtml = () => {
-    getChart().then((html) => {
-      const chartList = [];
-      const $ = cheerio.load(html.data);
-      const $titleList = $("div.wrap_song_info")
-        .children("div.rank01")
-        .children("span")
-        .children("a");
-      const $artistList = $("div.wrap_song_info")
-        .children("div.rank02")
-        .children("span");
-      const $albumList = $("div.wrap").children("a").children("img");
+  const setChart = (html) => {
+    const chartList = [];
+    const $ = cheerio.load(html.data);
+    const $titleList = $("div.wrap_song_info")
+      .children("div.rank01")
+      .children("span")
+      .children("a");
+    const $artistList = $("div.wrap_song_info")
+      .children("div.rank02")
+      .children("span");
+    const $albumList = $("div.wrap").children("a").children("img");
 
-      $titleList.map((i) => {
-        chartList[i] = {
-          title: $titleList[i].children[0].data,
-          artist: $artistList[i].children[0].children[0].data,
-          album: $albumList[i].attribs.src,
-        };
-      });
-      setMelonChart(chartList);
-      setIsLoading(false);
+    $titleList.map((i) => {
+      chartList[i] = {
+        title: $titleList[i].children[0].data,
+        artist: $artistList[i].children[0].children[0].data,
+        album: $albumList[i].attribs.src,
+      };
     });
+    setMelonChart(chartList);
   };
 
   const chartList = () => {
@@ -73,7 +73,7 @@ function Melon() {
     );
   };
   useEffect(() => {
-    getHtml();
+    getChart();
     return () => {};
   }, []);
 

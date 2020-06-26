@@ -5,36 +5,36 @@ import cheerio from "cheerio";
 function Bugs() {
   const [bugsChart, setBugsChart] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const url =
+    "https://cors-anywhere.herokuapp.com/https://music.bugs.co.kr/chart";
+
   const getChart = async () => {
     try {
-      return await axios.get(
-        "https://cors-anywhere.herokuapp.com/https://music.bugs.co.kr/chart"
-      );
+      const top100 = await axios.get(url);
+      setChart(top100);
+      setIsLoading(false);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const getHtml = () => {
-    getChart().then((html) => {
-      const chartList = [];
-      const $ = cheerio.load(html.data);
-      const $titleList = $("th").children("p.title").children("a");
-      const $artistList = $("td.left")
-        .children("p.artist")
-        .children("a:first-child");
-      const $albumList = $("td").children("a.thumbnail").children("img");
+  const setChart = (html) => {
+    const chartList = [];
+    const $ = cheerio.load(html.data);
+    const $titleList = $("th").children("p.title").children("a");
+    const $artistList = $("td.left")
+      .children("p.artist")
+      .children("a:first-child");
+    const $albumList = $("td").children("a.thumbnail").children("img");
 
-      $titleList.map((i) => {
-        chartList[i] = {
-          title: $titleList[i].children[0].data,
-          artist: $artistList[i].children[0].data,
-          album: $albumList[i].attribs.src,
-        };
-      });
-      setBugsChart(chartList);
-      setIsLoading(false);
+    $titleList.map((i) => {
+      chartList[i] = {
+        title: $titleList[i].children[0].data,
+        artist: $artistList[i].children[0].data,
+        album: $albumList[i].attribs.src,
+      };
     });
+    setBugsChart(chartList);
   };
 
   const chartList = () => {
@@ -71,7 +71,7 @@ function Bugs() {
   };
 
   useEffect(() => {
-    getHtml();
+    getChart();
     return () => {};
   }, []);
 
