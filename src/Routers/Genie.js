@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import cheerio from "cheerio";
 
@@ -10,7 +10,7 @@ function Genie() {
     "https://cors-anywhere.herokuapp.com/https://www.genie.co.kr/chart/top200?ditc=D&ymd=20200611&hh=14&rtm=Y&pg=2",
   ];
 
-  const getChart = async () => {
+  const getChart = useCallback(async () => {
     try {
       const top50 = await axios.get(url[0]);
       const top100 = await axios.get(url[1]);
@@ -25,7 +25,7 @@ function Genie() {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, []);
 
   const setChart = (html) => {
     const chartList = [];

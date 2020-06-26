@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import cheerio from "cheerio";
 
@@ -8,7 +8,7 @@ function Bugs() {
   const url =
     "https://cors-anywhere.herokuapp.com/https://music.bugs.co.kr/chart";
 
-  const getChart = async () => {
+  const getChart = useCallback(async () => {
     try {
       const top100 = await axios.get(url);
       setChart(top100);
@@ -16,7 +16,7 @@ function Bugs() {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, []);
 
   const setChart = (html) => {
     const chartList = [];
