@@ -76,7 +76,7 @@ function Bugs() {
   }, []);
 
   return (
-    <div className="conatiner">
+    <div className="container">
       {isLoading ? (
         <div className="loading">
           <h2>Loading....</h2>
