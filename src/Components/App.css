@@ -13,19 +13,36 @@ div.loading {
   background: rgba(128, 128, 128, 0.1);
 }
 
-div.container {
+.container {
   padding: 80px 0 0;
 }
 
-table.chart_table {
-  margin: 20px auto 40px;
-  width: 60%;
-  text-align: center;
+.container_chart > td {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
 }
-table.chart_table thead tr th {
+
+.container_chart .chart_table {
+  margin: 20px auto 40px;
+  width: 853px;
+  text-align: center;
+  border-collapse: collapse;
+}
+
+.container_chart .chart_table thead tr th {
   font-weight: normal;
   width: 50px;
 }
-table.chart_table tbody td img {
-  width: 50px;
+
+.container_chart .chart_table tbody tr {
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.container_chart .chart_table tbody tr td {
+  padding: 10px 0 10px;
+}
+
+.container_chart .chart_table tbody td img {
+  width: 70px;
 }
