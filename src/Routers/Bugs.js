@@ -81,6 +81,7 @@ function Bugs() {
   };
 
   useEffect(() => {
+    document.title = "Bugs | MyChart";
     getChart();
     return () => {};
   }, []);

@@ -93,6 +93,7 @@ function Genie() {
   };
 
   useEffect(() => {
+    document.title = "genie | MyChart";
     getChart();
     return () => {};
   }, []);

@@ -84,6 +84,7 @@ function Melon() {
     );
   };
   useEffect(() => {
+    document.title = "Melon | MyChart";
     getChart();
     return () => {};
   }, []);
