@@ -1,22 +1,25 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import cheerio from "cheerio";
+import { useDispatch, useSelector } from "react-redux";
+import * as type from "../modules/melon";
 
 function Melon() {
-  const [melonChart, setMelonChart] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
+  const melonChart = useSelector((state) => state.melon.melonChart);
+  const isLoading = useSelector((state) => state.melon.isLoading);
+
   const url =
     "https://cors-anywhere.herokuapp.com/https://www.melon.com/chart/index.htm";
 
-  const getChart = useCallback(async () => {
+  const getChart = async () => {
     try {
       const top100 = await axios.get(url);
       setChart(top100);
-      setIsLoading(false);
     } catch (error) {
       console.error(error);
     }
-  }, []);
+  };
 
   const setChart = (html) => {
     const chartList = [];
@@ -37,7 +40,10 @@ function Melon() {
         album: $albumList[i].attribs.src,
       };
     });
-    setMelonChart(chartList);
+    dispatch({
+      type: type.insert,
+      chart: chartList,
+    });
   };
 
   const chartList = () => {

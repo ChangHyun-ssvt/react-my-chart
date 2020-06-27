@@ -1,22 +1,24 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import cheerio from "cheerio";
+import { useSelector, useDispatch } from "react-redux";
+import * as type from "../modules/bugs";
 
 function Bugs() {
-  const [bugsChart, setBugsChart] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
+  const bugsChart = useSelector((state) => state.bugs.bugsChart);
+  const isLoading = useSelector((state) => state.bugs.isLoading);
   const url =
     "https://cors-anywhere.herokuapp.com/https://music.bugs.co.kr/chart";
 
-  const getChart = useCallback(async () => {
+  const getChart = async () => {
     try {
       const top100 = await axios.get(url);
       setChart(top100);
-      setIsLoading(false);
     } catch (error) {
       console.error(error);
     }
-  }, []);
+  };
 
   const setChart = (html) => {
     const chartList = [];
@@ -34,7 +36,10 @@ function Bugs() {
         album: $albumList[i].attribs.src,
       };
     });
-    setBugsChart(chartList);
+    dispatch({
+      type: type.insert,
+      chart: chartList,
+    });
   };
 
   const chartList = () => {

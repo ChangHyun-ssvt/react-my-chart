@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "react";
-// import React, { Component } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import cheerio from "cheerio";
+import { useDispatch, useSelector } from "react-redux";
+import * as type from "../modules/genie";
 
 function Genie() {
-  const [genieChart, setGenieChart] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const dispath = useDispatch();
+  const genieChart = useSelector((state) => state.genie.genieChart);
+  const isLoading = useSelector((state) => state.genie.isLoading);
+
   const url = [
     "https://cors-anywhere.herokuapp.com/https://www.genie.co.kr/chart/top200",
     "https://cors-anywhere.herokuapp.com/https://www.genie.co.kr/chart/top200?ditc=D&ymd=20200611&hh=14&rtm=Y&pg=2",
@@ -21,7 +24,6 @@ function Genie() {
           setChart(value);
           return true;
         });
-        setIsLoading(false);
       });
     } catch (error) {
       console.error(error);
@@ -45,7 +47,11 @@ function Genie() {
         album: $albumList[i].attribs.src,
       };
     });
-    setGenieChart(genieChart.concat(chartList));
+
+    dispath({
+      type: type.insert,
+      chart: chartList,
+    });
   };
 
   const chartList = () => {
