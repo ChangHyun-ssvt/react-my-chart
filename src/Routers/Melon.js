@@ -49,9 +49,9 @@ function Melon() {
   const chartList = () => {
     return (
       <div className="container_chart">
-        <td>
+        <p>
           <img src="/images/logo_melon142x99.png" alt="MelOn 로고 이미지"></img>
-        </td>
+        </p>
         <table className="chart_table">
           <colgroup>
             <col style={{ width: "10%" }}></col>

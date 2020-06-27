@@ -45,9 +45,9 @@ function Bugs() {
   const chartList = () => {
     return (
       <div className="container_chart">
-        <td>
+        <p>
           <img src="/images/logo_bugs.png" alt="bugs 로고 이미지"></img>
-        </td>
+        </p>
         <table className="chart_table">
           <colgroup>
             <col style={{ width: "10%" }}></col>
