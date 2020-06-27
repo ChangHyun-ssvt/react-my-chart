@@ -3,6 +3,7 @@ import axios from "axios";
 import cheerio from "cheerio";
 import { useDispatch, useSelector } from "react-redux";
 import * as type from "../modules/melon";
+import chartList from "./chartList";
 
 function Melon() {
   const dispatch = useDispatch();
@@ -46,43 +47,6 @@ function Melon() {
     });
   };
 
-  const chartList = () => {
-    return (
-      <div className="container_chart">
-        <p>
-          <img src="/images/logo_melon142x99.png" alt="MelOn 로고 이미지"></img>
-        </p>
-        <table className="chart_table">
-          <thead>
-            <tr>
-              <th>순위</th>
-              <th>앨범</th>
-              <th>제목</th>
-              <th>아티스트</th>
-            </tr>
-          </thead>
-          <tbody>
-            {melonChart.map((chart, index) => {
-              return (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>
-                    <img
-                      src={chart.album}
-                      alt={chart.title}
-                      title={chart.title}
-                    ></img>
-                  </td>
-                  <td>{chart.title}</td>
-                  <td>{chart.artist}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-    );
-  };
   useEffect(() => {
     document.title = "Melon | MyChart";
     getChart();
@@ -96,7 +60,15 @@ function Melon() {
           <h2>Loading....</h2>
         </div>
       ) : (
-        chartList()
+        <div className="container_chart">
+          <p>
+            <img
+              src="/images/logo_melon142x99.png"
+              alt="MelOn 로고 이미지"
+            ></img>
+          </p>
+          {chartList(melonChart)}
+        </div>
       )}
     </div>
   );
