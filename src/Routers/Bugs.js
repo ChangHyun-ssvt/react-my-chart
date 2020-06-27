@@ -49,12 +49,6 @@ function Bugs() {
           <img src="/images/logo_bugs.png" alt="bugs 로고 이미지"></img>
         </p>
         <table className="chart_table">
-          <colgroup>
-            <col style={{ width: "10%" }}></col>
-            <col style={{ width: "20%" }}></col>
-            <col style={{ width: "40%" }}></col>
-            <col style={{ width: "40%" }}></col>
-          </colgroup>
           <thead>
             <tr>
               <th>순위</th>
