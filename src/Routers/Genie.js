@@ -3,7 +3,8 @@ import axios from "axios";
 import cheerio from "cheerio";
 import { useDispatch, useSelector } from "react-redux";
 import * as type from "../modules/genie";
-import chartList from "./chartList";
+import ChartList from "./ChartList";
+import Loading from "./Loading";
 
 function Genie() {
   const dispath = useDispatch();
@@ -64,15 +65,13 @@ function Genie() {
   return (
     <div className="container">
       {isLoading ? (
-        <div className="loading">
-          <h2>Loading....</h2>
-        </div>
+        Loading()
       ) : (
         <div className="container_chart">
           <p>
             <img src="/images/logo_genie.png" alt="Genie 로고 이미지"></img>
           </p>
-          {chartList(genieChart)}
+          {ChartList(genieChart)}
         </div>
       )}
     </div>

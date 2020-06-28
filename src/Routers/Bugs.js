@@ -3,7 +3,8 @@ import axios from "axios";
 import cheerio from "cheerio";
 import { useSelector, useDispatch } from "react-redux";
 import * as type from "../modules/bugs";
-import chartList from "./chartList";
+import ChartList from "./ChartList";
+import Loading from "./Loading";
 
 function Bugs() {
   const dispatch = useDispatch();
@@ -52,15 +53,13 @@ function Bugs() {
   return (
     <div className="container">
       {isLoading ? (
-        <div className="loading">
-          <h2>Loading....</h2>
-        </div>
+        Loading()
       ) : (
         <div className="container_chart">
           <p>
             <img src="/images/logo_bugs.png" alt="bugs 로고 이미지"></img>
           </p>
-          {chartList(bugsChart)}
+          {ChartList(bugsChart)}
         </div>
       )}
     </div>

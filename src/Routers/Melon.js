@@ -3,7 +3,8 @@ import axios from "axios";
 import cheerio from "cheerio";
 import { useDispatch, useSelector } from "react-redux";
 import * as type from "../modules/melon";
-import chartList from "./chartList";
+import ChartList from "./ChartList";
+import Loading from "./Loading";
 
 function Melon() {
   const dispatch = useDispatch();
@@ -56,9 +57,7 @@ function Melon() {
   return (
     <div className="container">
       {isLoading ? (
-        <div className="loading">
-          <h2>Loading....</h2>
-        </div>
+        Loading()
       ) : (
         <div className="container_chart">
           <p>
@@ -67,7 +66,7 @@ function Melon() {
               alt="MelOn 로고 이미지"
             ></img>
           </p>
-          {chartList(melonChart)}
+          {ChartList(melonChart)}
         </div>
       )}
     </div>

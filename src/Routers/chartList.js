@@ -1,6 +1,6 @@
 import React from "react";
 
-const chartList = (chartList) => {
+const ChartList = (chartList) => {
   return (
     <table className="chart_table">
       <colgroup>
@@ -39,4 +39,4 @@ const chartList = (chartList) => {
   );
 };
 
-export default chartList;
+export default ChartList;
