@@ -10,7 +10,6 @@ function Genie() {
   const dispath = useDispatch();
   const genieChart = useSelector((state) => state.genie.genieChart);
   const isLoading = useSelector((state) => state.genie.isLoading);
-
   const url = [
     "https://cors-anywhere.herokuapp.com/https://www.genie.co.kr/chart/top200",
     "https://cors-anywhere.herokuapp.com/https://www.genie.co.kr/chart/top200?&pg=2",

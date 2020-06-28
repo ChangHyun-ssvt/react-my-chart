@@ -10,7 +10,6 @@ function Melon() {
   const dispatch = useDispatch();
   const melonChart = useSelector((state) => state.melon.melonChart);
   const isLoading = useSelector((state) => state.melon.isLoading);
-
   const url =
     "https://cors-anywhere.herokuapp.com/https://www.melon.com/chart/index.htm";
 
