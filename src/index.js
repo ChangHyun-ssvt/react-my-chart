@@ -6,6 +6,7 @@ import * as serviceWorker from "./serviceWorker";
 import { createStore } from "redux";
 import rootReducer from "./modules";
 import { Provider } from "react-redux";
+import "./FontAwesome";
 
 const store = createStore(rootReducer);
 
