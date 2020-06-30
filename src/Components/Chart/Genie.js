@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import cheerio from "cheerio";
 import { useDispatch, useSelector } from "react-redux";
-import * as type from "../modules/genie";
+import * as type from "../../Modules/genie";
 import ChartList from "./ChartList";
 import Loading from "./Loading";
 

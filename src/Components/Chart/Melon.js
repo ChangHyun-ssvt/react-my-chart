@@ -1,17 +1,17 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import cheerio from "cheerio";
-import { useSelector, useDispatch } from "react-redux";
-import * as type from "../modules/bugs";
+import { useDispatch, useSelector } from "react-redux";
+import * as type from "../../Modules/melon";
 import ChartList from "./ChartList";
 import Loading from "./Loading";
 
-function Bugs() {
+function Melon() {
   const dispatch = useDispatch();
-  const bugsChart = useSelector((state) => state.bugs.bugsChart);
-  const isLoading = useSelector((state) => state.bugs.isLoading);
+  const melonChart = useSelector((state) => state.melon.melonChart);
+  const isLoading = useSelector((state) => state.melon.isLoading);
   const url =
-    "https://cors-anywhere.herokuapp.com/https://music.bugs.co.kr/chart";
+    "https://cors-anywhere.herokuapp.com/https://www.melon.com/chart/index.htm";
 
   const getChart = async () => {
     try {
@@ -25,16 +25,19 @@ function Bugs() {
   const setChart = (html) => {
     const chartList = [];
     const $ = cheerio.load(html.data);
-    const $titleList = $("th").children("p.title").children("a");
-    const $artistList = $("td.left")
-      .children("p.artist")
-      .children("a:first-child");
-    const $albumList = $("td").children("a.thumbnail").children("img");
+    const $titleList = $("div.wrap_song_info")
+      .children("div.rank01")
+      .children("span")
+      .children("a");
+    const $artistList = $("div.wrap_song_info")
+      .children("div.rank02")
+      .children("span");
+    const $albumList = $("div.wrap").children("a").children("img");
 
     $titleList.each((i) => {
       chartList[i] = {
         title: $titleList[i].children[0].data,
-        artist: $artistList[i].children[0].data,
+        artist: $artistList[i].children[0].children[0].data,
         album: $albumList[i].attribs.src,
       };
     });
@@ -45,7 +48,7 @@ function Bugs() {
   };
 
   useEffect(() => {
-    document.title = "Bugs | MyChart";
+    document.title = "Melon | MyChart";
     getChart();
     return () => {};
   }, []);
@@ -57,13 +60,16 @@ function Bugs() {
       ) : (
         <div className="container_chart">
           <p>
-            <img src="/images/logo_bugs.png" alt="bugs 로고 이미지"></img>
+            <img
+              src="/images/logo_melon142x99.png"
+              alt="MelOn 로고 이미지"
+            ></img>
           </p>
-          {ChartList(bugsChart)}
+          {ChartList(melonChart)}
         </div>
       )}
     </div>
   );
 }
 
-export default Bugs;
+export default Melon;

@@ -5,12 +5,13 @@ body {
 }
 
 .loading {
+  position: absolute;
   width: 100%;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(128, 128, 128, 0.1);
+  background: rgba(36, 33, 33, 0.1);
 }
 
 .spinner {
@@ -68,4 +69,11 @@ body {
 
 .container_chart .chart_table tbody td img {
   width: 50px;
+}
+
+.form_register {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

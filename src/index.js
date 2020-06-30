@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./Components/App";
 import * as serviceWorker from "./serviceWorker";
 import { createStore } from "redux";
-import rootReducer from "./modules";
+import rootReducer from "./Modules";
 import { Provider } from "react-redux";
 import "./FontAwesome";
 

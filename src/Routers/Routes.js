@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import Bugs from "../Routers/Bugs";
-import Melon from "../Routers/Melon";
-import Genie from "../Routers/Genie";
+import Bugs from "../Components/Chart/Bugs";
+import Melon from "../Components/Chart/Melon";
+import Genie from "../Components/Chart/Genie";
 import Header from "./Header";
+import Register from "../Components/User/Register";
 
 export default class Routes extends Component {
   render() {
@@ -14,6 +15,7 @@ export default class Routes extends Component {
         <Route path="/melon" component={Melon}></Route>
         <Route path="/bugs" component={Bugs}></Route>
         <Route path="/genie" component={Genie}></Route>
+        <Route path="/user/register" component={Register}></Route>
       </Router>
     );
   }

@@ -23,7 +23,7 @@ export default class Header extends Component {
           </ul>
           <ul className="nav_right">
             <li>
-              <Link to="#">회원가입</Link>
+              <Link to="/user/register">회원가입</Link>
             </li>
             <li>
               <Link to="#">로그인</Link>
