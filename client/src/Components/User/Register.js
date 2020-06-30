@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-function register() {
+function Register() {
+  useEffect(() => {
+    document.title = "회원가입 | MyChart";
+    return () => {};
+  }, []);
+
   return (
     <div className="container">
       <form className="form_register">
@@ -23,4 +28,4 @@ function register() {
   );
 }
 
-export default register;
+export default Register;
