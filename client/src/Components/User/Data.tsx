@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 function Data() {
   const [data, setData] = useState();
-  fetch("/api")
+  fetch("/api/user/list")
     .then((res) => res.json())
     .then(
       (data) => setData(data),

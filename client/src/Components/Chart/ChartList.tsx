@@ -1,6 +1,6 @@
 import React from "react";
 
-const ChartList = (chartList) => {
+const ChartList = (chartList: chartProps[]) => {
   return (
     <table className="chart_table">
       <colgroup>
@@ -18,7 +18,7 @@ const ChartList = (chartList) => {
         </tr>
       </thead>
       <tbody>
-        {chartList.map((chart, index) => {
+        {chartList.map((chart: chartProps, index: number) => {
           return (
             <tr key={index}>
               <td>{index + 1}</td>
@@ -40,3 +40,9 @@ const ChartList = (chartList) => {
 };
 
 export default ChartList;
+
+export type chartProps = {
+  title?: string;
+  artist?: string;
+  album?: string;
+};

@@ -1,12 +1,16 @@
-const INSERT = "melon/INCERT";
+import { chartProps } from "../Components/Chart/ChartList";
+export const INSERT = "melon/INSERT" as const;
 
-export const insert = () => ({ type: INSERT });
+type stateType = {
+  melonChart: chartProps[];
+  isLoading: boolean;
+};
 
 const initialState = { melonChart: [], isLoading: true };
 
-const melon = (state = initialState, action) => {
+const melon = (state: stateType = initialState, action: any) => {
   switch (action.type) {
-    case insert:
+    case INSERT:
       if (state.melonChart.length >= 100) {
         state.melonChart = [];
       }

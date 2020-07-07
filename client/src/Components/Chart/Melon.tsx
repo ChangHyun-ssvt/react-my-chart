@@ -1,29 +1,30 @@
 import React, { useEffect } from "react";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import cheerio from "cheerio";
 import { useDispatch, useSelector } from "react-redux";
 import * as type from "../../Modules/melon";
-import ChartList from "./ChartList";
+import ChartList, { chartProps } from "./ChartList";
 import Loading from "./Loading";
+import { RootState } from "../../Modules/index";
 
 function Melon() {
   const dispatch = useDispatch();
-  const melonChart = useSelector((state) => state.melon.melonChart);
-  const isLoading = useSelector((state) => state.melon.isLoading);
+  const melonChart = useSelector((state: RootState) => state.melon.melonChart);
+  const isLoading = useSelector((state: RootState) => state.melon.isLoading);
   const url =
     "https://cors-anywhere.herokuapp.com/https://www.melon.com/chart/index.htm";
 
   const getChart = async () => {
     try {
-      const top100 = await axios.get(url);
+      const top100: AxiosResponse<any> = await axios.get(url);
       setChart(top100);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const setChart = (html) => {
-    const chartList = [];
+  const setChart = (html: AxiosResponse<any>) => {
+    const chartList: chartProps[] = [];
     const $ = cheerio.load(html.data);
     const $titleList = $("div.wrap_song_info")
       .children("div.rank01")
@@ -42,7 +43,7 @@ function Melon() {
       };
     });
     dispatch({
-      type: type.insert,
+      type: type.INSERT,
       chart: chartList,
     });
   };

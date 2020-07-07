@@ -1,12 +1,17 @@
-const INSERT = "bugs/INCERT";
+import { chartProps } from "../Components/Chart/ChartList";
 
-export const insert = () => ({ type: INSERT });
+export const INSERT = "bugs/INCERT";
+
+type stateType = {
+  bugsChart: chartProps[];
+  isLoading: boolean;
+};
 
 const initialState = { bugsChart: [], isLoading: true };
 
-const bugs = (state = initialState, action) => {
+const bugs = (state: stateType = initialState, action: any) => {
   switch (action.type) {
-    case insert:
+    case INSERT:
       if (state.bugsChart.length >= 100) {
         state.bugsChart = [];
       }

@@ -1,12 +1,16 @@
-const INSERT = "genie/INCERT";
+import { chartProps } from "../Components/Chart/ChartList";
+export const INSERT = "melon/INSERT" as const;
 
-export const insert = () => ({ type: INSERT });
+type stateType = {
+  genieChart: chartProps[];
+  isLoading: boolean;
+};
 
 const initialState = { genieChart: [], isLoading: true };
 
-const genie = (state = initialState, action) => {
+const genie = (state: stateType = initialState, action: any) => {
   switch (action.type) {
-    case insert:
+    case INSERT:
       if (state.genieChart.length >= 100) {
         state.genieChart = [];
       }

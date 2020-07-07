@@ -1,15 +1,16 @@
 import React, { useEffect } from "react";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import cheerio from "cheerio";
 import { useDispatch, useSelector } from "react-redux";
 import * as type from "../../Modules/genie";
-import ChartList from "./ChartList";
+import ChartList, { chartProps } from "./ChartList";
 import Loading from "./Loading";
+import { RootState } from "../../Modules/index";
 
 function Genie() {
   const dispath = useDispatch();
-  const genieChart = useSelector((state) => state.genie.genieChart);
-  const isLoading = useSelector((state) => state.genie.isLoading);
+  const genieChart = useSelector((state: RootState) => state.genie.genieChart);
+  const isLoading = useSelector((state: RootState) => state.genie.isLoading);
   const url = [
     "https://cors-anywhere.herokuapp.com/https://www.genie.co.kr/chart/top200",
     "https://cors-anywhere.herokuapp.com/https://www.genie.co.kr/chart/top200?&pg=2",
@@ -17,8 +18,8 @@ function Genie() {
 
   const getChart = async () => {
     try {
-      const top50 = await axios.get(url[0]);
-      const top100 = await axios.get(url[1]);
+      const top50: AxiosResponse<any> = await axios.get(url[0]);
+      const top100: AxiosResponse<any> = await axios.get(url[1]);
 
       Promise.all([top50, top100]).then((values) => {
         values.map((value) => {
@@ -31,8 +32,8 @@ function Genie() {
     }
   };
 
-  const setChart = (html) => {
-    const chartList = [];
+  const setChart = (html: AxiosResponse<any>) => {
+    const chartList: chartProps[] = [];
     const $ = cheerio.load(html.data);
     const $titleList = $("tr.list").children("td.info").children("a.title");
     const $artistList = $("tr.list").children("td.info").children("a.artist");
@@ -43,14 +44,14 @@ function Genie() {
 
     $titleList.each((i) => {
       chartList[i] = {
-        title: $titleList[i].children[0].data.trim(),
+        title: $titleList[i].children[0].data,
         artist: $artistList[i].children[0].data,
         album: $albumList[i].attribs.src,
       };
     });
 
     dispath({
-      type: type.insert,
+      type: type.INSERT,
       chart: chartList,
     });
   };

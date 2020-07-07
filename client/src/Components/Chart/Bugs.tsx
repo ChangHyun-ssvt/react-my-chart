@@ -1,15 +1,16 @@
 import React, { useEffect } from "react";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import cheerio from "cheerio";
 import { useSelector, useDispatch } from "react-redux";
 import * as type from "../../Modules/bugs";
-import ChartList from "./ChartList";
+import ChartList, { chartProps } from "./ChartList";
 import Loading from "./Loading";
+import { RootState } from "../../Modules/index";
 
 function Bugs() {
   const dispatch = useDispatch();
-  const bugsChart = useSelector((state) => state.bugs.bugsChart);
-  const isLoading = useSelector((state) => state.bugs.isLoading);
+  const bugsChart = useSelector((state: RootState) => state.bugs.bugsChart);
+  const isLoading = useSelector((state: RootState) => state.bugs.isLoading);
   const url =
     "https://cors-anywhere.herokuapp.com/https://music.bugs.co.kr/chart";
 
@@ -22,8 +23,8 @@ function Bugs() {
     }
   };
 
-  const setChart = (html) => {
-    const chartList = [];
+  const setChart = (html: AxiosResponse<any>) => {
+    const chartList: chartProps[] = [];
     const $ = cheerio.load(html.data);
     const $titleList = $("th").children("p.title").children("a");
     const $artistList = $("td.left")
@@ -33,13 +34,13 @@ function Bugs() {
 
     $titleList.each((i) => {
       chartList[i] = {
-        title: $titleList[i].children[0].data,
+        title: $titleList[i].children[0].data?.trim(),
         artist: $artistList[i].children[0].data,
         album: $albumList[i].attribs.src,
       };
     });
     dispatch({
-      type: type.insert,
+      type: type.INSERT,
       chart: chartList,
     });
   };
