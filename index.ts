@@ -11,7 +11,7 @@ app.get("/api", (req: Request, res: Response) => {
   res.send("Hello World!");
 });
 
-app.use("/user", user);
+app.use("/api/user", user);
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);

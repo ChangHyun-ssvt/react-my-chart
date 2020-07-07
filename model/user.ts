@@ -18,10 +18,11 @@ mongoose.connect(
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  username: String,
+  userid: String,
   password: String,
+  username: String,
   email: String,
-  admin: { type: Boolean, default: false },
+  salt: String,
 });
 
 module.exports = mongoose.model("User", userSchema);

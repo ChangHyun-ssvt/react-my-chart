@@ -5,7 +5,7 @@ import Melon from "../Components/Chart/Melon";
 import Genie from "../Components/Chart/Genie";
 import Header from "./Header";
 import Register from "../Components/User/Register";
-import Data from "../Components/User/Data";
+import Login from "../Components/User/Login";
 
 export default class Routes extends Component {
   render() {
@@ -17,7 +17,7 @@ export default class Routes extends Component {
         <Route path="/bugs" component={Bugs}></Route>
         <Route path="/genie" component={Genie}></Route>
         <Route path="/user/register" component={Register}></Route>
-        <Route path="/user/data" component={Data}></Route>
+        <Route path="/user/login" component={Login}></Route>
       </Router>
     );
   }

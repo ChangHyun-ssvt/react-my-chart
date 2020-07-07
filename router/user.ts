@@ -1,5 +1,6 @@
 import { Request, Response, Router, NextFunction } from "express";
 import bodyParser from "body-parser";
+import crypto from "crypto";
 
 const router = Router();
 const User = require("../model/user");
@@ -10,16 +11,55 @@ type userType = {
   username: string;
   email: string;
   password: string;
+  salt: string;
 };
 
 router.post(
-  "/:username/:email/:password",
+  "/register",
   async (req: Request, res: Response, next: NextFunction) => {
-    const user = req.params;
-    await User.create({ ...user }, (err: TypeError, user: userType) => {
+    const body = req.body;
+    console.log(body);
+
+    const inputPassword = body.password;
+    const salt = Math.round(new Date().valueOf() * Math.random()) + "";
+    const hashPassword = crypto
+      .createHash("sha512")
+      .update(inputPassword + salt)
+      .digest("hex");
+    body.password = hashPassword;
+    body.salt = salt;
+    await User.create({ ...body }, (err: TypeError, user: userType) => {
       if (err) return res.status(500).send("User 생성 실패");
-      res.status(200).send(user);
+      res.status(200).send("User 생성 성공");
     });
+  }
+);
+
+router.post(
+  "/login",
+  async (req: Request, res: Response, next: NextFunction) => {
+    const body = req.body;
+
+    const result = await User.findOne({
+      userid: body.userid,
+    });
+
+    const dbPassword = result.dataValues.password;
+    const inputPassowrd = body.password;
+    const salt = result.salt;
+    console.log(result);
+    const hashPassword = crypto
+      .createHash("sha512")
+      .update(inputPassowrd + salt)
+      .digest("hex");
+
+    if (dbPassword === hashPassword) {
+      console.log("비밀번호 일치");
+      res.redirect("http://localhost:3000/asd");
+    } else {
+      console.log("비밀번호 불일치");
+      res.redirect("http://localhost:3000/user/login");
+    }
   }
 );
 

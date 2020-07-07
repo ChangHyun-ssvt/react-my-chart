@@ -20,6 +20,7 @@
     "express": "^4.17.1",
     "mongoose": "^5.9.21",
     "nodemon": "^2.0.4",
+    "redux-thunk": "^2.3.0",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.6"
   }

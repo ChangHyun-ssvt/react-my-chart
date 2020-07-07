@@ -26,7 +26,7 @@ export default class Header extends Component {
               <Link to="/user/register">회원가입</Link>
             </li>
             <li>
-              <Link to="/user/data">로그인</Link>
+              <Link to="/user/login">로그인</Link>
             </li>
           </ul>
         </nav>
