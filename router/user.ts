@@ -5,8 +5,6 @@ import crypto from "crypto";
 const router = Router();
 const User = require("../model/user");
 
-router.use(bodyParser.urlencoded({ extended: true }));
-
 type userType = {
   username: string;
   email: string;
