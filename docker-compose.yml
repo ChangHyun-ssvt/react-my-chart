@@ -1,0 +1,15 @@
+# Use root/example as user/password credentials
+version: '3.2'
+
+services:
+  mongodb:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: kmov1234
+    volumes:
+    - ./data/db:/data/db
+    container_name: "mongodb"
+    ports:
+    - 27017:27017
