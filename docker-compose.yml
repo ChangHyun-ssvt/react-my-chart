@@ -1,15 +1,30 @@
 # Use root/example as user/password credentials
-version: '3.2'
+version: "3.2"
 
 services:
   mongodb:
     image: mongo
-    restart: always
+    restart: "on-failure"
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: kmov1234
     volumes:
-    - ./data/db:/data/db
+      - ./data/db:/data/db
     container_name: "mongodb"
     ports:
-    - 27017:27017
+      - 27017:27017
+  app:
+    container_name: nginx-react
+    restart: "on-failure"
+    build: ./client
+    ports:
+      - 80:80
+  # app:
+  #   image: node:12.18.2
+  #   volumes:
+  #     - ./:/usr/src/services
+  #   working_dir: /usr/src/service
+  #   command: [npm run dev]
+  #   ports:
+  #     - 3000:3000
+  #     - 5000:5000

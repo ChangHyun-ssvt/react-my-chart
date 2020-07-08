@@ -43,7 +43,7 @@ function Register() {
       alert("이메일을 입력해주세요");
       return false;
     }
-    if (form.password != form.passwordCheck) {
+    if (form.password !== form.passwordCheck) {
       alert("패스워드를 확인해주세요");
       return false;
     }
