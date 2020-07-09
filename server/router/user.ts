@@ -27,7 +27,7 @@ router.post(
     body.salt = salt;
     await User.create({ ...body }, (err: TypeError, user: userType) => {
       if (err) return res.status(500).send("User 생성 실패");
-      res.status(200).send("User 생성 성공");
+      res.status(201).send("User 생성 성공");
     });
   }
 );
@@ -41,21 +41,25 @@ router.post(
       userid: body.userid,
     });
 
-    const dbPassword = result.dataValues.password;
-    const inputPassowrd = body.password;
-    const salt = result.salt;
-    console.log(result);
-    const hashPassword = crypto
-      .createHash("sha512")
-      .update(inputPassowrd + salt)
-      .digest("hex");
-
-    if (dbPassword === hashPassword) {
-      console.log("비밀번호 일치");
-      res.redirect("http://localhost:3000/asd");
+    if (result === null) {
+      console.log("없는 회원입니다");
+      res.status(401).send("없는 회원입니다");
     } else {
-      console.log("비밀번호 불일치");
-      res.redirect("http://localhost:3000/user/login");
+      const dbPassword = result.password;
+      const inputPassowrd = body.password;
+      const salt = result.salt;
+      const hashPassword = crypto
+        .createHash("sha512")
+        .update(inputPassowrd + salt)
+        .digest("hex");
+
+      if (dbPassword === hashPassword) {
+        console.log("로그인 성공");
+        res.status(200).send("로그인 성공");
+      } else {
+        console.log("비밀번호가 다릅니다");
+        res.status(401).send("비밀번호가 다릅니다");
+      }
     }
   }
 );
