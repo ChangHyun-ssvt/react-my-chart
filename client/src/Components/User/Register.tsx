@@ -1,5 +1,6 @@
 import React, { useEffect, useState, Dispatch, SetStateAction } from "react";
 import axios, { AxiosResponse } from "axios";
+import qs from "querystring";
 
 function Register() {
   const [form, setForm] = useState({
@@ -52,7 +53,7 @@ function Register() {
 
   const postRegister = async () => {
     await axios
-      .post("/api/user/register", { ...form })
+      .post("/api/user/register", qs.stringify({ ...form }))
       .then((res: AxiosResponse<any>) => {
         alert(res.data);
         window.location.href = "/";
