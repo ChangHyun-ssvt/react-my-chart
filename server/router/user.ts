@@ -17,18 +17,27 @@ router.post(
   async (req: Request, res: Response, next: NextFunction) => {
     const body = req.body;
 
-    const inputPassword = body.password;
-    const salt = Math.round(new Date().valueOf() * Math.random()) + "";
-    const hashPassword = crypto
-      .createHash("sha512")
-      .update(inputPassword + salt)
-      .digest("hex");
-    body.password = hashPassword;
-    body.salt = salt;
-    await User.create({ ...body }, (err: TypeError, user: userType) => {
-      if (err) return res.status(500).send("User 생성 실패");
-      res.status(201).send("User 생성 성공");
+    const result = await User.findOne({
+      userid: body.userid,
     });
+
+    if (result !== null) {
+      console.log("이미 가입된 아이디 입니다");
+      res.status(401).send("이미 가입된 아이디 입니다");
+    } else {
+      const inputPassword = body.password;
+      const salt = Math.round(new Date().valueOf() * Math.random()) + "";
+      const hashPassword = crypto
+        .createHash("sha512")
+        .update(inputPassword + salt)
+        .digest("hex");
+      body.password = hashPassword;
+      body.salt = salt;
+      await User.create({ ...body }, (err: TypeError, user: userType) => {
+        if (err) return res.status(500).send("User 생성 실패");
+        res.status(201).send("User 생성 성공");
+      });
+    }
   }
 );
 

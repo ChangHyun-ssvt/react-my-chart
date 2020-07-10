@@ -23,6 +23,7 @@ function Register() {
       [name]: value,
     });
   };
+
   const handleRegister = async () => {
     if (form.userid === "") {
       alert("아이디를 입력해주세요");
