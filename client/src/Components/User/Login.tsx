@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import qs from "querystring";
 
 function Login() {
@@ -14,14 +14,16 @@ function Login() {
   }, []);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
     setForm({
       ...form,
-      [name]: value,
+      [e.target.name]: e.target.value,
     });
   };
+  console.log(form);
 
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     if (form.userid === "") {
       alert("아이디를 입력해주세요");
       return false;
@@ -30,20 +32,22 @@ function Login() {
       alert("패스워드를 입력해주세요");
       return false;
     }
-    postLogin();
+    await postLogin();
   };
 
   const postLogin = async () => {
-    await axios
-      .post("/api/user/login", qs.stringify({ ...form }))
-      .then((res: AxiosResponse<any>) => {
-        alert(res.data);
-      });
+    try {
+      await axios.post("/api/user/login", qs.stringify({ ...form }));
+      alert("로그인 성공");
+      window.location.href = "/";
+    } catch {
+      alert("회원 정보가 틀렸습니다");
+    }
   };
 
   return (
     <div className="container">
-      <form className="form_register" onSubmit={handleLogin}>
+      <div className="form_register">
         <p>아이디</p>
         <input
           type="text"
@@ -60,12 +64,14 @@ function Login() {
           onChange={handleOnChange}
           value={form.password}
         ></input>
-        <input
+        <button
           type="submit"
-          value="로그인"
           className="form_register_button"
-        ></input>
-      </form>
+          onClick={handleLogin}
+        >
+          로그인
+        </button>
+      </div>
     </div>
   );
 }

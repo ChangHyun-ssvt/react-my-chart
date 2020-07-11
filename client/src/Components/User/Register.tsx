@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import qs from "querystring";
 
 function Register() {
@@ -20,11 +20,13 @@ function Register() {
     const { name, value } = e.target;
     setForm({
       ...form,
-      [name]: value,
+      [e.target.name]: e.target.value,
     });
   };
 
-  const handleRegister = async () => {
+  const handleRegister = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     if (form.userid === "") {
       alert("아이디를 입력해주세요");
       return false;
@@ -49,25 +51,22 @@ function Register() {
       alert("패스워드를 확인해주세요");
       return false;
     }
-    postRegister();
+    await postRegister();
   };
 
   const postRegister = async () => {
-    await axios
-      .post("/api/user/register", qs.stringify({ ...form }))
-      .then((res: AxiosResponse<any>) => {
-        alert(res.data);
-        window.location.href = "/";
-      });
+    try {
+      await axios.post("/api/user/register", qs.stringify({ ...form }));
+      alert("회원가입 성공");
+      window.location.href = "/";
+    } catch {
+      alert("회원 가입이 실패했습니다.");
+    }
   };
 
   return (
     <div className="container">
-      <form
-        className="form_register"
-        id="form_register"
-        onSubmit={handleRegister}
-      >
+      <div className="form_register" id="form_register">
         <p>아이디</p>
         <input
           type="text"
@@ -108,12 +107,14 @@ function Register() {
           value={form.email}
         ></input>
         <br></br>
-        <input
+        <button
           type="submit"
-          value="확인"
           className="form_register_button"
-        ></input>
-      </form>
+          onClick={handleRegister}
+        >
+          가입
+        </button>
+      </div>
     </div>
   );
 }
