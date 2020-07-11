@@ -36,6 +36,7 @@ router.post(
       await User.create({ ...body }, (err: TypeError, user: userType) => {
         if (err) return res.status(500).send("User 생성 실패");
         res.status(201).send("User 생성 성공");
+        console.log("회원가입 성공");
       });
     }
   }
