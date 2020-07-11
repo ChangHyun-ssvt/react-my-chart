@@ -4,7 +4,7 @@ version: "3.2"
 services:
   mongodb:
     image: mongo
-    restart: "on-failure"
+    restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: kmov1234
@@ -13,12 +13,25 @@ services:
     container_name: "mongodb"
     ports:
       - 27017:27017
+    networks:
+      - app-network
+
+  express:
+    build: ./server
+    restart: always
+    ports:
+      - 5000:5000
+    networks:
+      - app-network
+
   app:
-    restart: "on-failure"
+    restart: always
     build: ./client
     ports:
       - 80:80
-  express:
-    build: ./server
-    ports:
-      - 5000:5000
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
