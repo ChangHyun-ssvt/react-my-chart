@@ -11,7 +11,7 @@ db.once("open", function () {
 });
 
 mongoose.connect(
-  "mongodb://root:kmov1234@localhost:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false",
+  "mongodb://root:kmov1234@mongodb:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false",
   { useUnifiedTopology: true, useNewUrlParser: true }
 );
 

@@ -1,20 +1,11 @@
 # client
-FROM node:12.18.2 as build
+FROM node:12.18.2
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 COPY . .
 RUN npm install
-RUN npm run build
 
-# nginx
-FROM nginx:stable-alpine
+EXPOSE 3000
 
-RUN rm -rf /etc/nginx/conf.d
-RUN mkdir /etc/nginx/conf.d
-COPY conf/default.conf /etc/nginx/conf.d/default.conf
-# copy build file from client
-COPY --from=build /usr/src/app/build /usr/share/nginx/html
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["npm","run","start"]
