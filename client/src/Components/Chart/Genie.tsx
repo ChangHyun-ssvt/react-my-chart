@@ -49,7 +49,6 @@ function Genie() {
         album: $albumList[i].attribs.src,
       };
     });
-
     dispath({
       type: type.INSERT,
       chart: chartList,
