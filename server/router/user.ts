@@ -1,5 +1,4 @@
 import { Request, Response, Router, NextFunction } from "express";
-import bodyParser from "body-parser";
 import crypto from "crypto";
 
 const router = Router();

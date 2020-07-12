@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import qs from "querystring";
+import qs from "qs";
 
 function Register() {
   const [form, setForm] = useState({
